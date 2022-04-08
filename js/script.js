@@ -48,7 +48,13 @@ function getPassphrase(
 ){
     // RETURNS MULTIPLE WORDS FROM THE DICTIONARY AS ONE
     // COMPLETE PASSPHRASE
+    let passPhrase = [];
+
+    while( passPhrase.length <= wordCount ){
+        getRandomWord()
+    }; 
 }; // END FUNC
+
 
 function getRandomNum(min = 0, max = 9) {
     // GENERATES A PSEUDO-RANDOM NUMBER USING IN-BUILT
