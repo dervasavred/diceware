@@ -3,10 +3,11 @@
 /* ================================================== */
 :root {
     --main-bg-color: #0C0C0D;
+    --main-text-color: white;
+
+    --cont-bg-color: #004466;
+    --cont-border-color: black;
 }
-
-
-
 
 /* ================================================== */
 /*      RESET/NORMALIZE RULES                         */
@@ -24,20 +25,111 @@ html {
 
 body {
     font-size: 62.5%;
+    font-family: Roboto, Source Sans Pro, Arial, Helvetica, sans-serif;
     background-color: var(--main-bg-color);
+    color: var(--main-text-color);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* ================================================== */
 /*      LAYOUT RULES                                  */
 /* ================================================== */
 
+#container {
+    /* width: clamp(350px, 65vw, 75vw); */
+    background-color: var(--cont-bg-color);
+    border: 1px solid var(--cont-border-color);
+
+    padding: 3rem;
+    border-radius: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.title {
+    text-align: center;
+}
+
+.form-ele-container {
+    display: flex;
+    align-items: center;
+}
+
+input {
+    margin: 2rem;
+}
 
 
 /* ================================================== */
 /*      APPEARANCE RULES                              */
 /* ================================================== */
+h1 {
+    font-size: 3rem;
+    line-height: 3.5rem;
+    margin-bottom: 5rem;
+    text-align: center;
+}
 
+form {
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 1rem;
+    column-gap: 3rem;
+    justify-content: center;
+    align-items: center;
 
+}
+
+label, button {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.num-box {
+    width: 4rem;
+    font-size: 2rem;
+}
+
+button {
+    grid-column: span 2;
+    color: var(--main-text-color);
+    background-color: transparent;
+    cursor: pointer;
+    border: 3px solid var(--main-text-color);
+    border-radius: 1rem;
+    padding: 0.5rem 1rem;
+}
+
+button:hover {
+    background-color: #FFFFFF33;
+}
+
+ul {
+    margin-top: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+
+    list-style: none;
+    font-size: 1.65rem;
+    width: 100%;
+
+    border-top: 3px solid var(--main-text-color);
+    padding-top: 3rem;
+
+    text-align: center;
+
+    /* border: 1px green solid; */
+}
+
+li {
+    /* justify-content: center; */
+    line-height: 3rem;
+}
 
 /* ================================================== */
 /*      MEDIA QUERIES                                 */

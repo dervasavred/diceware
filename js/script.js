@@ -4,8 +4,8 @@
 // ==================================================
 // AUTHOR: GITHUB.COM/DERVASAVRED/
 //
-// DESC: GENERATES PASSPHRASES USING STRICT RANDOM ENTRIES FROM EFF'S EXTENDED
-//      DICEWARE WORD DICTIONARY.
+// DESC: GENERATES PASSPHRASES USING STRICT RANDOM ENTRIES FROM EFF'S
+//      (ELECTRONIC FRONTIER FOUNDATION) EXTENDED DICEWARE WORD DICTIONARY.
 // https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
 //
 //          TYPICAL USES WOULD BE FOR USERS TO REQUEST PASSPHRASES VIA
@@ -23,11 +23,35 @@
     const dictLength = wordList.length;
 
     // EFF RECOMMENDS 6 WORDS IN PASSPHRASE BY DEFAULT
-    const SUGGESTED_PASSPHRASE_WORD_COUNT = 6;
+    const REC_PASSPHRASE_WORD_COUNT = 6;
+
+    // HTML ELEMENT SELECTORS
+    const listDisplay = document.getElementById("phrase-list");
+
+    let results = [];
+
+    const PHRASES_TO_GEN_RANGE = document.getElementById("phrase-count-range");
+    const PHRASES_TO_GEN_DISPLAY = document.getElementById("phrase-count-display");
+    // const PHRASES_TO_GEN_NUM = document.getElementById("phrase-count-number");
+
+
+
+// ==================================================
+//          EVENT LISTENERS
+// ==================================================
+
+PHRASES_TO_GEN_RANGE.addEventListener("input", syncDisplay);
+// PHRASES_TO_GEN_NUM.addEventListener("input", syncDisplay);
+
 
 // ==================================================
 //          FUNCTIONS
 // ==================================================
+
+function syncDisplay(e){
+    const value = e.target.value;
+    this.value = value;
+}; // END FUNC
 
 function countOutputs() {
     // DISPLAYS OUTPUTS FROM A FUNCTION AND COUNTS OCCURENCES OF OUTPUTS IN A
@@ -37,13 +61,12 @@ function countOutputs() {
 
 class PassPhrase {
     constructor(
-    wordCount = SUGGESTED_PASSPHRASE_WORD_COUNT,
+    wordCount = REC_PASSPHRASE_WORD_COUNT,
     delimiter = " "
     ){
-
+        // PROPERTIES
         this.wordCount = wordCount;
         this.delimiter = delimiter;
-
         this.phraseArr = [];
 
         // POPULATE ARRAY WITH RANDOM WORDS FROM DICTIONARY
@@ -54,7 +77,14 @@ class PassPhrase {
         // LENGTH PROPERTY DOES NOT INCLUDE DELIMITERS
         this.phraseLength =
                     this.phraseArr.reduce((acc,n) => acc + n.length, 0);
+
+
+
     }; // END CONSTRUCTOR
+
+    assembleStr(){
+        return this.phraseArr.join(this.delimiter);
+    }; // END METHOD
 
     camelCase() {
         for(let i = 1; i < this.phraseArr.length; i++) {
@@ -92,36 +122,43 @@ function getRandomWord() {
 
 
 function getRandomPhrase(
-   desiredWordCount = SUGGESTED_PASSPHRASE_WORD_COUNT,
+   desiredWordCount = REC_PASSPHRASE_WORD_COUNT,
    maxLength = 48,
    delimiter = " ",
    isSorted = false,
    isCamelCase = false,
 
 ) {
+    // GUARD CLAUSES
+    // if(desiredWordCount <= 0) desiredWordCount = REC_PASSPHRASE_WORD_COUNT;
+    desiredWordCount <= 0 ? desiredWordCount = REC_PASSPHRASE_WORD_COUNT :
+                    desiredWordCount = Math.floor(desiredWordCount);
+    maxLength <= 0 ? maxLength = 48 : maxLength = Math.floor(maxLength);
+
     // GET PASSPHRASE
     let phrase = new PassPhrase(desiredWordCount, delimiter);
 
     if(isSorted){ phrase.phraseArr.sort()};
     if(isCamelCase){ phrase.camelCase()};
 
-    // console.log("CC: ");
-     console.log(phrase);
-
-    // RETURNS FULL PASS PHRASE
-    return "Full phrase: " + phrase.phraseArr.join(delimiter);
+    // // RETURNS FULL PASS PHRASE
+    return phrase;
 }; // END FUNC
 
 // ==================================================
 //          CALLS
 // ==================================================
 
+
+for(let i = 0; i < 20; i++){
+    results.push(getRandomPhrase(-8,-6,"",false,true));
+    listDisplay.innerHTML +=
+                    `<li>${results[i].assembleStr()}
+                    (${results[i].phraseLength} chars)</li>`;
+};
+
+
 // ==================================================
 //          DEBUG TRACERS
 // ==================================================
-console.log("Length: " + dictLength);
-
-for(let i = 0; i < 10; i++){
-    console.table(getRandomPhrase(6,64,"//"));
-    console.log("========================================");
-};
+// console.log("Length: " + dictLength);

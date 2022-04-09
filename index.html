@@ -10,9 +10,53 @@
     <link rel="stylesheet" href="css/styles.css" />
     <title>Diceware Passphrase Generator</title>
 </head>
+
+
+
 <body>
+    <div id="container">
+        <h1 class="title">Diceware Passphrase Generator</h1>
+
+        <form>
+            <div class="form-ele-container">
+                <label for="phrase-count">Passphrases to Generate:</label>
+                <input type="range" min="1" max="50" value="10" id="phrase-count-range">
+                <span id="phrase-count-display"></span>
+                <!-- <input class="num-box" type="number" min="1" max="50" value="10" id="phrase-count-number"> -->
+            </div>
 
 
-    <script src="js/script.js"></script>
+            <div class="form-ele-container">
+                <label for="word-count">Number of Words in Phrase: </label>
+                <input type="range" min="3" max="12" value="6" id="word-count-range">
+                <input class="num-box" type="number" min="3" max="12" value="6" id="word-count-number">
+            </div>
+
+            <div class="form-ele-container">
+                <label for="max-word-length">Max Length per Word: </label>
+                <input type="range" min="4" max="9" value="9" id="max-word-length-range">
+                <input class="num-box" type="number" min="4" max="9" value="9" id="max-word-length-number">
+            </div>
+
+            <div class="form-ele-container">
+                <label for="max-char-length">Max Characters in Phrase: </label>
+                <input type="range" min="24" max="128" value="48" id="max-char-length-range">
+                <input class="num-box" type="number" min="24" max="128" value="48" id="max-char-length-number">
+            </div>
+
+            <label for="camel-case">camelCase </label>
+            <input type="checkbox" id="camel-case" >
+            <!-- <label for="">Numbers </label>
+            <label for="">Uppercase </label> -->
+
+            <button type="Submit">Generate Passwords</button>
+
+        </form>
+
+        <ul id="phrase-list">
+
+        </ul>
+    </div>
+    <script src="js/script.js" defer></script>
 </body>
 </html>
