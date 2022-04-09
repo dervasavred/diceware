@@ -17,35 +17,43 @@
     <div id="container">
         <h1 class="title">Diceware Passphrase Generator</h1>
 
-        <form>
+        <form id="phrase-gen-form">
             <div class="form-ele-container">
                 <label for="phrase-count">Passphrases to Generate:</label>
-                <input type="range" min="1" max="50" value="10" id="phrase-count-range">
-                <span id="phrase-count-display"></span>
-                <!-- <input class="num-box" type="number" min="1" max="50" value="10" id="phrase-count-number"> -->
+                <input type="range" min="1" max="50" value="25" id="phrase-count-range">
+                <span id="phrase-count-display">25</span>
             </div>
 
 
             <div class="form-ele-container">
                 <label for="word-count">Number of Words in Phrase: </label>
                 <input type="range" min="3" max="12" value="6" id="word-count-range">
-                <input class="num-box" type="number" min="3" max="12" value="6" id="word-count-number">
+                <span id="word-count-display">6</span>
             </div>
-
+<!--
             <div class="form-ele-container">
-                <label for="max-word-length">Max Length per Word: </label>
+                <label for="max-word-length">Max Characters per Word: </label>
                 <input type="range" min="4" max="9" value="9" id="max-word-length-range">
-                <input class="num-box" type="number" min="4" max="9" value="9" id="max-word-length-number">
+                <span id="max-word-length-display">9</span>
+            </div> -->
+
+            <div>
+                <label for="camel-case">camelCase </label>
+                <input type="checkbox" id="camel-case" >
             </div>
 
-            <div class="form-ele-container">
-                <label for="max-char-length">Max Characters in Phrase: </label>
-                <input type="range" min="24" max="128" value="48" id="max-char-length-range">
-                <input class="num-box" type="number" min="24" max="128" value="48" id="max-char-length-number">
-            </div>
+            <div>
+                <label for="delimiter">Delimiter </label>
+                <select name="delimiter-picker" id="delimiter-select" form="phrase-gen-form">
+                    <option value=" " selected>Space</option>
+                    <option value="">NONE</option>
+                    <option value="-">Dash/Hyphen</option>
+                    <option value="_">Underscore</option>
+                    <option value=":">Colon</option>
+                    <option value=";">Semi-colon</option>
+                </select>
 
-            <label for="camel-case">camelCase </label>
-            <input type="checkbox" id="camel-case" >
+            </div>
             <!-- <label for="">Numbers </label>
             <label for="">Uppercase </label> -->
 

@@ -31,26 +31,57 @@
     let results = [];
 
     const PHRASES_TO_GEN_RANGE = document.getElementById("phrase-count-range");
-    const PHRASES_TO_GEN_DISPLAY = document.getElementById("phrase-count-display");
-    // const PHRASES_TO_GEN_NUM = document.getElementById("phrase-count-number");
+    const PHRASES_TO_GEN_DISP = document.getElementById("phrase-count-display");
 
+    const WORD_COUNT_RANGE = document.getElementById("word-count-range");
+    const WORD_COUNT_DISP = document.getElementById("word-count-display");
+
+    const DELIMITER = document.getElementById("delimiter-select");
+
+    const CAMELCASE = document.getElementById("camel-case");
+
+    // const MAX_CHARS_PER_WORD_RANGE = document.getElementById("max-word-length-range");
+    // const MAX_CHARS_PER_WORD_DISP = document.getElementById("max-word-length-display");
+
+    const FORM = document.getElementById("phrase-gen-form");
 
 
 // ==================================================
 //          EVENT LISTENERS
 // ==================================================
 
-PHRASES_TO_GEN_RANGE.addEventListener("input", syncDisplay);
-// PHRASES_TO_GEN_NUM.addEventListener("input", syncDisplay);
+PHRASES_TO_GEN_RANGE.addEventListener("input", function(e){
+    syncDisplay(e,PHRASES_TO_GEN_RANGE,PHRASES_TO_GEN_DISP);
+});
+
+WORD_COUNT_RANGE.addEventListener("input", function(e){
+    syncDisplay(e,WORD_COUNT_RANGE,WORD_COUNT_DISP);
+});
+
+// MAX_CHARS_PER_WORD_RANGE.addEventListener("input", function(e){
+//     syncDisplay(e,MAX_CHARS_PER_WORD_RANGE,MAX_CHARS_PER_WORD_DISP);
+// });
+
+
+
+FORM.addEventListener("submit", e => {
+    // THIS PREVENTS THE PAGE FROM REFRESHING ON SUBMITTAL
+    e.preventDefault();
+
+    // CALL FINAL FUNCTION TO BUILD PHRASES
+    submitForm();
+});
+
 
 
 // ==================================================
 //          FUNCTIONS
 // ==================================================
 
-function syncDisplay(e){
+function syncDisplay(e, id1, id2){
     const value = e.target.value;
-    this.value = value;
+    id1.value = value;
+    id2.innerText = value;
 }; // END FUNC
 
 function countOutputs() {
@@ -123,9 +154,7 @@ function getRandomWord() {
 
 function getRandomPhrase(
    desiredWordCount = REC_PASSPHRASE_WORD_COUNT,
-   maxLength = 48,
    delimiter = " ",
-   isSorted = false,
    isCamelCase = false,
 
 ) {
@@ -133,32 +162,56 @@ function getRandomPhrase(
     // if(desiredWordCount <= 0) desiredWordCount = REC_PASSPHRASE_WORD_COUNT;
     desiredWordCount <= 0 ? desiredWordCount = REC_PASSPHRASE_WORD_COUNT :
                     desiredWordCount = Math.floor(desiredWordCount);
-    maxLength <= 0 ? maxLength = 48 : maxLength = Math.floor(maxLength);
 
     // GET PASSPHRASE
-    let phrase = new PassPhrase(desiredWordCount, delimiter);
+    const phrase = new PassPhrase(desiredWordCount, delimiter);
 
-    if(isSorted){ phrase.phraseArr.sort()};
     if(isCamelCase){ phrase.camelCase()};
 
     // // RETURNS FULL PASS PHRASE
     return phrase;
 }; // END FUNC
 
+
+
+function submitForm(){
+
+    // RESET DISPLAY AREAS ON EACH CALL
+    listDisplay.innerHTML = "";
+    results = [];
+    PHRASES_TO_GEN_DISP.innerText = PHRASES_TO_GEN_RANGE.value;
+    WORD_COUNT_DISP.innerText = WORD_COUNT_RANGE.value;
+    const isCamelCase = CAMELCASE.checked;
+
+    // BUILD THE PHRASE ARRAY
+    for(let i = 0; i < PHRASES_TO_GEN_RANGE.value; i++){
+        results.push(
+            getRandomPhrase(
+                    WORD_COUNT_RANGE.value,
+                    DELIMITER.value, // DELIMITER
+                    isCamelCase    // CAMELCASE
+        ));
+        listDisplay.innerHTML +=
+                        `<li>${results[i].assembleStr()}
+                        (${results[i].phraseLength} chars)</li>`;
+    };
+}; // END FUNC
+
+
 // ==================================================
 //          CALLS
 // ==================================================
 
+// INITIAL CALL TO POPULATE PAGE BASED ON DEFAULT FORM OPTIONS
+submitForm();
 
-for(let i = 0; i < 20; i++){
-    results.push(getRandomPhrase(-8,-6,"",false,true));
-    listDisplay.innerHTML +=
-                    `<li>${results[i].assembleStr()}
-                    (${results[i].phraseLength} chars)</li>`;
-};
+
 
 
 // ==================================================
 //          DEBUG TRACERS
 // ==================================================
 // console.log("Length: " + dictLength);
+
+console.log("Phrase count: " + PHRASES_TO_GEN_RANGE.value);
+console.log("Word count: " + WORD_COUNT_RANGE.value);

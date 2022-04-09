@@ -39,12 +39,11 @@ body {
 /* ================================================== */
 
 #container {
-    /* width: clamp(350px, 65vw, 75vw); */
+    width: clamp(350px, 65vw, 75vw);
     background-color: var(--cont-bg-color);
     border: 1px solid var(--cont-border-color);
 
     padding: 3rem;
-    border-radius: 3rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,7 +84,7 @@ form {
 
 }
 
-label, button {
+label, button, span {
     font-size: 2rem;
     font-weight: bold;
 }
@@ -129,6 +128,10 @@ ul {
 li {
     /* justify-content: center; */
     line-height: 3rem;
+}
+
+ul :nth-child(even){
+    color: darkgrey;
 }
 
 /* ================================================== */
